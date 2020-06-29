@@ -1,0 +1,10 @@
+{
+	"auth": {
+		"foodblogfrontendccec3bd1": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"customAuth": false
+		}
+	}
+}
