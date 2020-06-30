@@ -25,9 +25,12 @@ function App() {
     }
   }
 
-  // useEffect(() => {
-  //   (async () => console.log(await Auth.currentAuthenticatedUser()))();
-  // }, []);
+  useEffect(() => {
+    (async () => {
+      const user = await Auth.currentAuthenticatedUser();
+      setSignedInUser(user);
+    })();
+  }, []);
   return (
     <div className="App">
       {signedInUser ? (
