@@ -6,11 +6,9 @@ function App() {
   const [signedInUser, setSignedInUser] = useState(undefined);
   const [signInForm, setSignInForm] = useState({ username: "", password: "" });
 
-  async function signOut() {
+  function signOut() {
     try {
-      await Auth.signOut({ global: true }).then(() => {
-        window.location = "";
-      });
+      Auth.signOut({ global: true }).then(() => setSignedInUser(undefined));
     } catch (error) {
       console.log(error);
     }
@@ -32,21 +30,24 @@ function App() {
   // }, []);
   return (
     <div className="App">
-      <button onClick={signOut}>Logout</button>
-      <div>
-        <input
-          onChange={(e) =>
-            setSignInForm({ ...signInForm, username: e.target.value })
-          }
-        />
-        <input
-          type="password"
-          onChange={(e) =>
-            setSignInForm({ ...signInForm, password: e.target.value })
-          }
-        />
-        <button onClick={signIn}>Sign In</button>
-      </div>
+      {signedInUser ? (
+        <button onClick={signOut}>Logout</button>
+      ) : (
+        <div>
+          <input
+            onChange={(e) =>
+              setSignInForm({ ...signInForm, username: e.target.value })
+            }
+          />
+          <input
+            type="password"
+            onChange={(e) =>
+              setSignInForm({ ...signInForm, password: e.target.value })
+            }
+          />
+          <button onClick={signIn}>Sign In</button>
+        </div>
+      )}
     </div>
   );
 }
