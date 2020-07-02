@@ -1,19 +1,19 @@
 {
-    "dev": {
+    "fdblgtwo": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-foodblogfrontend-dev-190329-authRole",
-            "UnauthRoleArn": "arn:aws:iam::366684996576:role/amplify-foodblogfrontend-dev-190329-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::366684996576:role/amplify-foodblogfrontend-dev-190329-authRole",
-            "Region": "us-east-2",
-            "DeploymentBucketName": "amplify-foodblogfrontend-dev-190329-deployment",
-            "UnauthRoleName": "amplify-foodblogfrontend-dev-190329-unauthRole",
-            "StackName": "amplify-foodblogfrontend-dev-190329",
-            "StackId": "arn:aws:cloudformation:us-east-2:366684996576:stack/amplify-foodblogfrontend-dev-190329/c0dc44c0-ba5c-11ea-9af6-065ddb117676",
-            "AmplifyAppId": "d2jabjwq2b1se1"
+            "AuthRoleName": "amplify-foodblogfrontend-fdblgtwo-182354-authRole",
+            "UnauthRoleArn": "arn:aws:iam::957528496369:role/amplify-foodblogfrontend-fdblgtwo-182354-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::957528496369:role/amplify-foodblogfrontend-fdblgtwo-182354-authRole",
+            "Region": "us-east-1",
+            "DeploymentBucketName": "amplify-foodblogfrontend-fdblgtwo-182354-deployment",
+            "UnauthRoleName": "amplify-foodblogfrontend-fdblgtwo-182354-unauthRole",
+            "StackName": "amplify-foodblogfrontend-fdblgtwo-182354",
+            "StackId": "arn:aws:cloudformation:us-east-1:957528496369:stack/amplify-foodblogfrontend-fdblgtwo-182354/b8289790-bcb2-11ea-9bf3-1271b8f35690",
+            "AmplifyAppId": "dinxxx6dwljo"
         },
         "categories": {
             "auth": {
-                "foodblogfrontendccec3bd1": {}
+                "foodblogfrontendd1b29813": {}
             }
         }
     }
