@@ -6,7 +6,9 @@ import StepLabel from "@material-ui/core/StepLabel";
 import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import SetUsername from "../components/signup/SetUsername";
+import ConfirmSignUp from "../components/signup/ConfirmSignUp";
 import { Auth } from "aws-amplify";
+import { navigate } from "@reach/router";
 
 const useStyles = makeStyles(theme => ({
   root: {
@@ -23,9 +25,10 @@ const useStyles = makeStyles(theme => ({
 
 function getSteps() {
   return [
-    "Select master blaster campaign settings",
-    "Create an ad group",
-    "Create an ad"
+    "Create Username and Password",
+    "Upload profile pic",
+    "Write Bio",
+    "Confirm Sign Up"
   ];
 }
 
@@ -36,9 +39,13 @@ function getStepContent(stepIndex, signUpForm, setSignUpForm) {
         <SetUsername signUpForm={signUpForm} setSignUpForm={setSignUpForm} />
       );
     case 1:
-      return "What is an ad group anyways?";
+      return "WUpload profile pic";
     case 2:
-      return "This is the bit I really care about!";
+      return "Write Bio";
+    case 3:
+      return (
+        <ConfirmSignUp signUpForm={signUpForm} setSignUpForm={setSignUpForm} />
+      );
     default:
       return "Unknown stepIndex";
   }
@@ -51,12 +58,29 @@ export default function SignUp() {
 
   const [signUpForm, setSignUpForm] = React.useState({
     username: "",
-    password: ""
+    password: "",
+    confirmationCode: ""
   });
   console.log(signUpForm);
 
   const [signUpUser, setSignUpUser] = React.useState(undefined);
   console.log("signed up user", signUpUser);
+
+  function renderButton() {
+    if (activeStep === steps.length - 1) {
+      return (
+        <Button variant="contained" color="primary" onClick={handleConfirmUser}>
+          Confirm
+        </Button>
+      );
+    } else {
+      return (
+        <Button variant="contained" color="primary" onClick={handleNext}>
+          Next
+        </Button>
+      );
+    }
+  }
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -79,10 +103,24 @@ export default function SignUp() {
         setSignUpUser(user);
       }
       signUp();
+      handleNext();
     } catch (error) {
       console.log(error);
     }
   };
+
+  async function handleConfirmUser() {
+    try {
+      const response = await Auth.confirmSignUp(
+        signUpForm.username,
+        signUpForm.confirmationCode
+      );
+      prompt(response);
+      if (response === "SUCCESS") navigate("/");
+    } catch (error) {
+      console.log(error);
+    }
+  }
 
   return (
     <div className={classes.root}>
@@ -94,14 +132,30 @@ export default function SignUp() {
         ))}
       </Stepper>
       <div>
-        {activeStep === steps.length ? (
-          <div>
-            <Typography className={classes.instructions}>
-              All steps completed
-            </Typography>
-            <Button onClick={handleCreateUser}>Create User</Button>
-          </div>
-        ) : (
+        <div>
+          <Typography className={classes.instructions}>
+            {getStepContent(activeStep, signUpForm, setSignUpForm)}{" "}
+          </Typography>
+          <Button
+            disabled={activeStep === 0}
+            onClick={handleBack}
+            className={classes.backButton}
+          >
+            Back
+          </Button>
+          {activeStep === steps.length - 2 ? (
+            <Button
+              variant="contained"
+              color="primary"
+              onClick={handleCreateUser}
+            >
+              Create User
+            </Button>
+          ) : (
+            renderButton()
+          )}
+        </div>
+        {/* ) : (
           <div>
             <Typography className={classes.instructions}>
               {getStepContent(activeStep, signUpForm, setSignUpForm)}
@@ -119,7 +173,7 @@ export default function SignUp() {
               </Button>
             </div>
           </div>
-        )}
+        )} */}
       </div>
     </div>
   );
