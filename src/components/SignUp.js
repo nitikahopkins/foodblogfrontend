@@ -28,10 +28,12 @@ function getSteps() {
   ];
 }
 
-function getStepContent(stepIndex) {
+function getStepContent(stepIndex, signUpForm, setSignUpForm) {
   switch (stepIndex) {
     case 0:
-      return <SetUsername />;
+      return (
+        <SetUsername signUpForm={signUpForm} setSignUpForm={setSignUpForm} />
+      );
     case 1:
       return "What is an ad group anyways?";
     case 2:
@@ -45,6 +47,12 @@ export default function SignUp() {
   const classes = useStyles();
   const [activeStep, setActiveStep] = React.useState(0);
   const steps = getSteps();
+
+  const [signUpForm, setSignUpForm] = React.useState({
+    username: "",
+    password: ""
+  });
+  console.log(signUpForm);
 
   const handleNext = () => {
     setActiveStep(prevActiveStep => prevActiveStep + 1);
@@ -78,7 +86,7 @@ export default function SignUp() {
         ) : (
           <div>
             <Typography className={classes.instructions}>
-              {getStepContent(activeStep)}
+              {getStepContent(activeStep, signUpForm, setSignUpForm)}
             </Typography>
             <div>
               <Button
