@@ -1,6 +1,6 @@
 {
     "identityPoolName": "foodblogfrontendd1b29813_identitypool_d1b29813",
-    "allowUnauthenticatedIdentities": false,
+    "allowUnauthenticatedIdentities": true,
     "resourceNameTruncated": "foodbld1b29813",
     "userPoolName": "foodblogfrontendd1b29813_userpool_d1b29813",
     "autoVerifiedAttributes": [

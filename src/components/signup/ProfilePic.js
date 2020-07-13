@@ -44,8 +44,13 @@ const useStyles = makeStyles(theme => ({
   }
 }));
 
-export default function SetBio({ signUpForm, setSignUpForm }) {
+export default function ProfilePic({ signUpForm, setSignUpForm }) {
   const classes = useStyles();
+
+  function onChange(e) {
+    // const file = e.target.files[0];
+    setSignUpForm({ ...signUpForm, profilePic: e.target.files[0] });
+  }
 
   return (
     <Container component="main" maxWidth="xs">
@@ -60,18 +65,10 @@ export default function SetBio({ signUpForm, setSignUpForm }) {
         <form className={classes.form} noValidate>
           <Grid container spacing={2}>
             <Grid item xs={12}>
-              <TextField
-                onChange={event =>
-                  setSignUpForm({ ...signUpForm, bio: event.target.value })
-                }
-                variant="outlined"
-                required
-                fullWidth
-                id="bio"
-                label="Bio"
-                name="bio"
-                autoComplete="bio"
-                value={signUpForm.bio}
+              <input
+                type="file"
+                accept="image/png"
+                onChange={evt => onChange(evt)}
               />
             </Grid>
           </Grid>

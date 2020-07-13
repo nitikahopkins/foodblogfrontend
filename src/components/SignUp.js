@@ -8,7 +8,8 @@ import Typography from "@material-ui/core/Typography";
 import SetUsername from "../components/signup/SetUsername";
 import ConfirmSignUp from "../components/signup/ConfirmSignUp";
 import SetBio from "../components/signup/SetBio";
-import { Auth } from "aws-amplify";
+import ProfilePic from "../components/signup/ProfilePic";
+import { Auth, Storage } from "aws-amplify";
 import { navigate } from "@reach/router";
 
 const useStyles = makeStyles(theme => ({
@@ -40,7 +41,9 @@ function getStepContent(stepIndex, signUpForm, setSignUpForm) {
         <SetUsername signUpForm={signUpForm} setSignUpForm={setSignUpForm} />
       );
     case 1:
-      return "WUpload profile pic";
+      return (
+        <ProfilePic signUpForm={signUpForm} setSignUpForm={setSignUpForm} />
+      );
     case 2:
       return <SetBio signUpForm={signUpForm} setSignUpForm={setSignUpForm} />;
     case 3:
@@ -60,6 +63,7 @@ export default function SignUp() {
   const [signUpForm, setSignUpForm] = React.useState({
     username: "",
     password: "",
+    profilePic: undefined,
     bio: "",
     confirmationCode: ""
   });
@@ -119,9 +123,16 @@ export default function SignUp() {
       );
       prompt(response);
       if (response === "SUCCESS") {
-        //create the image in S3 bucket
-        //call the db
-        navigate("/");
+        Storage.put(
+          "file_upload_after_user_creation.png",
+          signUpForm.profilePic,
+          {
+            contentType: "image/png"
+          }
+        )
+          .then(result => console.log(result))
+          .then(() => navigate("/"))
+          .catch(err => console.log(err)); //call the db
       }
     } catch (error) {
       console.log(error);
