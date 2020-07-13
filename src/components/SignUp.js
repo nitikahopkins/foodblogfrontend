@@ -7,6 +7,7 @@ import Button from "@material-ui/core/Button";
 import Typography from "@material-ui/core/Typography";
 import SetUsername from "../components/signup/SetUsername";
 import ConfirmSignUp from "../components/signup/ConfirmSignUp";
+import SetBio from "../components/signup/SetBio";
 import { Auth } from "aws-amplify";
 import { navigate } from "@reach/router";
 
@@ -41,7 +42,7 @@ function getStepContent(stepIndex, signUpForm, setSignUpForm) {
     case 1:
       return "WUpload profile pic";
     case 2:
-      return "Write Bio";
+      return <SetBio signUpForm={signUpForm} setSignUpForm={setSignUpForm} />;
     case 3:
       return (
         <ConfirmSignUp signUpForm={signUpForm} setSignUpForm={setSignUpForm} />
@@ -59,6 +60,7 @@ export default function SignUp() {
   const [signUpForm, setSignUpForm] = React.useState({
     username: "",
     password: "",
+    bio: "",
     confirmationCode: ""
   });
   console.log(signUpForm);
@@ -116,7 +118,11 @@ export default function SignUp() {
         signUpForm.confirmationCode
       );
       prompt(response);
-      if (response === "SUCCESS") navigate("/");
+      if (response === "SUCCESS") {
+        //create the image in S3 bucket
+        //call the db
+        navigate("/");
+      }
     } catch (error) {
       console.log(error);
     }
@@ -155,25 +161,6 @@ export default function SignUp() {
             renderButton()
           )}
         </div>
-        {/* ) : (
-          <div>
-            <Typography className={classes.instructions}>
-              {getStepContent(activeStep, signUpForm, setSignUpForm)}
-            </Typography>
-            <div>
-              <Button
-                disabled={activeStep === 0}
-                onClick={handleBack}
-                className={classes.backButton}
-              >
-                Back
-              </Button>
-              <Button variant="contained" color="primary" onClick={handleNext}>
-                {activeStep === steps.length - 1 ? "Finish" : "Next"}
-              </Button>
-            </div>
-          </div>
-        )} */}
       </div>
     </div>
   );
