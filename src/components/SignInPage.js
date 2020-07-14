@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import Avatar from "@material-ui/core/Avatar";
 import Button from "@material-ui/core/Button";
 import CssBaseline from "@material-ui/core/CssBaseline";
@@ -79,111 +79,48 @@ const useStyles = makeStyles(theme => ({
 
 export default function SignInPage({ setSignInForm, signInForm, signIn }) {
   const classes = useStyles();
+  const [randomImages, setRandomImages] = useState([]);
 
-  function importAll(r) {
-    let images = {};
-    r.keys().map((item, index) => {
-      images[item.replace("./", "")] = r(item);
-    });
-    return images;
-  }
+  useEffect(() => {
+    function importAll(r) {
+      let images = {};
+      r.keys().map((item, index) => {
+        images[item.replace("./", "")] = r(item);
+      });
+      return images;
+    }
+    const images = importAll(
+      require.context("../assets", false, /\.(png|jpe?g|svg)$/)
+    );
 
-  const images = importAll(
-    require.context("../assets", false, /\.(png|jpe?g|svg)$/)
-  );
-
-  console.log(images);
-  chooseRandomImage(images);
+    let imgArr = [];
+    for (let i = 0; i < 30; i++) {
+      imgArr.push(chooseRandomImage(images));
+    }
+    setRandomImages(imgArr);
+  }, []);
+  console.log(randomImages);
 
   return (
     <Grid container component="main" className={classes.root}>
       <CssBaseline />
       <Grid item xs={false} sm={4} md={7}>
         <div className={classes.row} style={{ maxWidth: "100vw" }}>
-          <div className={classes.column}>
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />
-          </div>{" "}
-          <div className={classes.column}>
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />
-          </div>{" "}
-          <div className={classes.column}>
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />
-          </div>{" "}
-          <div className={classes.column}>
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />
-          </div>{" "}
-          <div className={classes.column}>
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />
-          </div>{" "}
-          <div className={classes.column}>
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />{" "}
-            <img
-              className={classes.innerImage}
-              src={chooseRandomImage(images)}
-            />
-          </div>
+          {" "}
+          {Array.from(Array(3).keys()).map((el1, i) => {
+            return (
+              <div className={classes.column}>
+                {Array.from(Array(10).keys()).map((el2, j) => {
+                  return (
+                    <img
+                      className={classes.innerImage}
+                      src={randomImages[10 * i + j]}
+                    />
+                  );
+                })}
+              </div>
+            );
+          })}
         </div>
       </Grid>
 
