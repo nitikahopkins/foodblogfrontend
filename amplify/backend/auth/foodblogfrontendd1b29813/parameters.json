@@ -1,8 +1,8 @@
 {
-    "identityPoolName": "foodblogfrontendccec3bd1_identitypool_ccec3bd1",
-    "allowUnauthenticatedIdentities": false,
-    "resourceNameTruncated": "foodblccec3bd1",
-    "userPoolName": "foodblogfrontendccec3bd1_userpool_ccec3bd1",
+    "identityPoolName": "foodblogfrontendd1b29813_identitypool_d1b29813",
+    "allowUnauthenticatedIdentities": true,
+    "resourceNameTruncated": "foodbld1b29813",
+    "userPoolName": "foodblogfrontendd1b29813_userpool_d1b29813",
     "autoVerifiedAttributes": [
         "email"
     ],
@@ -28,10 +28,9 @@
     "userpoolClientReadAttributes": [
         "email"
     ],
-    "userpoolClientLambdaRole": "foodblccec3bd1_userpoolclient_lambda_role",
+    "userpoolClientLambdaRole": "foodbld1b29813_userpoolclient_lambda_role",
     "userpoolClientSetAttributes": false,
-    "sharedId": "ccec3bd1",
-    "resourceName": "foodblogfrontendccec3bd1",
+    "resourceName": "foodblogfrontendd1b29813",
     "authSelections": "identityPoolAndUserPool",
     "authRoleArn": {
         "Fn::GetAtt": [
@@ -46,6 +45,9 @@
         ]
     },
     "useDefault": "default",
+    "usernameAttributes": [
+        "email"
+    ],
     "userPoolGroupList": [],
     "dependsOn": []
 }
